@@ -1,6 +1,6 @@
 ![PaginationManager](https://github.com/TaimurAyaz/PaginationManager/blob/master/PaginationManager.png)
 
-**PaginationManager** makes it easy to add paging functionality to any kind of scrollViews. 
+**PaginationManager** makes it easy to add paging functionality to any kind of scrollView. 
 
 -
 ##Compatibility:
