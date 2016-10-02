@@ -14,5 +14,5 @@ PaginationManager makes it super easy to add pagination to any scrollView. It ob
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'PaginationManager/Classes/**/*'
+  s.source_files = 'Source/*'
 end
