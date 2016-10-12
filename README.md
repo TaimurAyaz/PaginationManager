@@ -22,17 +22,50 @@ If you are using `CocoaPods`, you need to import `PaginationManager` as a module
 ```
 import PaginationManager
 ```
-
-Usage is fairly simple. You need to create a `PaginationManager` property (you need a strong reference):
+####Declaration
+You need to create a `PaginationManager` property (you need a strong reference):
 ```
 var paginationManager: PaginationManager?
 ```
-Then initialize it with the appropriate `scrollView` and `direction`, and then assign the delegate:
+
+####Initialization
+`PaginationManager` provides two initializers:
+
+--
+
+`init(scrollView:direction:thresholdType:)`
+
+* `scrollView` 
+The scrollView for the pagination manager
+
+* `direction`
+The direction of the scrollView
+
+* `thresholdType`
+The thresholdType for the pagination manager. This has a default value of `.constant(value: PaginationManagerConstantThresholdScreenDimension)`. See `Types of threshold` below.
+
+Use the first initializer if you want to hook into the `scrollView`'s delegate methods. This will set the `PaginationManager` as the delegate of the `scrollView` and pass the delegate methods to the original delegate. 
+
+--
+
+`init(direction:thresholdType:)`
+
+* `direction`
+The direction of the scrollView
+
+* `thresholdType`
+The thresholdType for the pagination manager. This has a default value of `.constant(value: PaginationManagerConstantThresholdScreenDimension)`. See `Types of threshold` below.
+
+If you use the this initializer, you need to explicitly call `scrollViewDidScroll:` on the `PaginationManager` at your `scrollView`'s `scrollViewDidScroll:` delegate callback.
+
+####Delegation
+
+You also need to assign the delegate of the `PaginationManager`, like so:
 ```
-paginationManager = PaginationManager(scrollView: tableView, direction: .vertical)
 paginationManager?.delegate = self
 ```
-You also need to implement the `PaginationManagerDelegate` method:
+
+Also make sure to conform to the `PaginationManagerDelegate`:
 ```
 func paginationManagerDidExceedThreshold(manager: PaginationManager, threshold: CGFloat, reset: PaginationManagerResetBlock)
 ```
