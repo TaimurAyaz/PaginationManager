@@ -18,6 +18,10 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         paginationManager = PaginationManager(scrollView: tableView, direction: .vertical)
+        
+//        Uncomment to prevent the pagination manager from taking over the scrollview delegate. See `scrollViewDidScroll:` below.
+//        paginationManager = PaginationManager(direction: .vertical)
+        
         paginationManager?.delegate = self
     }
     
@@ -37,12 +41,14 @@ class ViewController: UITableViewController {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
+//        Uncomment this if you initialzed the pagination manager without a scrollview. You need to explicitly call the `scrollViewDidScroll:` on the pagination manager.
+//        paginationManager?.scrollViewDidScroll(scrollView)
     }
 }
 
 extension ViewController: PaginationManagerDelegate {
     
-    func paginationManagerDidExceedThreshold(manager: PaginationManager, threshold: CGFloat, reset: PaginationManagerResetBlock) {
+    func paginationManagerDidExceedThreshold(manager: PaginationManager, reset: PaginationManagerResetBlock) {
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.5 * Double(NSEC_PER_SEC)))
         dispatch_after(delayTime, dispatch_get_main_queue()) {
             self.numberOfItems += 20
