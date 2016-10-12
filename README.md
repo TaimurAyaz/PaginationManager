@@ -80,11 +80,14 @@ You need to provide a scroll direction for the pagination manager during initial
 ####PaginationManagerThresholdType : enum
 This property governs the threshold type for the `PaginationManager`. It provides the following types of thresholds:
 
-* percentage(value:)
+* **percentage(value:)**
+
 This type defines a threshold based on the percentage scrolled. It takes in a percentage value. This value should be between `0.0` and `1.0`.
 
-* constant(value:)
+* **constant(value:)**
+
 This type defines a threshold based on a constant amount from the end of the `scrollView`'s content. It requires a constant value. This value should be greater than `0.0`. This is the default type for the `PaginationManager` and its default value is defined as `PaginationManagerConstantThresholdScreenDimension` which takes the maximum device screen dimension based on the `direction` of the `PaginationManager`.
+
 
 ##Delegate callback:
 The `PaginationManagerDelegate` provides only one method:
