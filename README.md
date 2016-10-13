@@ -58,6 +58,14 @@ The thresholdType for the pagination manager. This has a default value of `.cons
 
 If you use the this initializer, you need to explicitly call `scrollViewDidScroll:` on the `PaginationManager` at your `scrollView`'s `scrollViewDidScroll:` delegate callback.
 
+--
+
+`PaginationManager` also includes the following static initializers for objective-c interoperability. 
+**`constantThresholdManager(forScrollView:direction:constant:)`**
+**`constantThresholdManager(withDirection:constant:)`**
+**`percentageThresholdManager(forScrollView:direction:percentage:)`** 
+**`percentageThresholdManager(withDirection:percentage:)`**
+
 ####Delegation
 
 You also need to assign the delegate of the `PaginationManager`, like so:
