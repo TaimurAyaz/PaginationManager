@@ -61,6 +61,7 @@ If you use the this initializer, you need to explicitly call `scrollViewDidScrol
 --
 
 `PaginationManager` also includes the following static initializers for objective-c interoperability. 
+
 **`constantThresholdManager(forScrollView:direction:constant:)`**
 **`constantThresholdManager(withDirection:constant:)`**
 **`percentageThresholdManager(forScrollView:direction:percentage:)`** 
