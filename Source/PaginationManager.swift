@@ -77,7 +77,7 @@ public class PaginationManager: NSObject, UIScrollViewDelegate {
     public weak var delegate: PaginationManagerDelegate?
     
     // The threshold type for the pagination manager.
-    public var thresholdType: PaginationManagerThresholdType
+    public var thresholdType: PaginationManagerThresholdType = .constant(value: PaginationManagerConstantThresholdScreenDimension)
     
     // The default direction for the pagination manager. Overridable in the initializer.
     public private(set) var direction: PaginationManagerDirection = .vertical
@@ -92,6 +92,29 @@ public class PaginationManager: NSObject, UIScrollViewDelegate {
     // Weak reference to the original delegate of the scrollView.
     private weak var originalDelegate: UIScrollViewDelegate?
     
+    // Static constant threshold initializer for objective-c interop. With scrollView.
+    static func constantThresholdManager(forScrollView scrollView: UIScrollView, direction: PaginationManagerDirection, constant: CGFloat) -> PaginationManager {
+        let paginationManager = PaginationManager(scrollView: scrollView, direction: direction, thresholdType: .constant(value: constant))
+        return paginationManager
+    }
+    
+    // Static constant threshold initializer for objective-c interop. Without scrollView.
+    static func constantThresholdManager(withDirection direction: PaginationManagerDirection, constant: CGFloat) -> PaginationManager {
+        let paginationManager = PaginationManager(direction: direction, thresholdType: .constant(value: constant))
+        return paginationManager
+    }
+    
+    // Static percentage threshold initializer for objective-c interop. With scrollView.
+    static func percentageThresholdManager(forScrollView scrollView: UIScrollView, direction: PaginationManagerDirection, percentage: CGFloat) -> PaginationManager {
+        let paginationManager = PaginationManager(scrollView: scrollView, direction: direction, thresholdType: .percentage(value: percentage))
+        return paginationManager
+    }
+    
+    // Static percentage threshold initializer for objective-c interop. Without scrollView.
+    static func percentageThresholdManager(withDirection direction: PaginationManagerDirection, percentage: CGFloat) -> PaginationManager {
+        let paginationManager = PaginationManager(direction: direction, thresholdType: .percentage(value: percentage))
+        return paginationManager
+    }
     
     /// Initializer for the pagination manager.
     ///
