@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'PaginationManager'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'PaginationManager makes it super easy to add pagination to any scrollView.'
 
   s.description      = <<-DESC
