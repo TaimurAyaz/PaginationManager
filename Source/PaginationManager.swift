@@ -93,25 +93,25 @@ public class PaginationManager: NSObject, UIScrollViewDelegate {
     private weak var originalDelegate: UIScrollViewDelegate?
     
     // Static constant threshold initializer for objective-c interop. With scrollView.
-    static func constantThresholdManager(forScrollView scrollView: UIScrollView, direction: PaginationManagerDirection, constant: CGFloat) -> PaginationManager {
+    public static func constantThresholdManager(forScrollView scrollView: UIScrollView, direction: PaginationManagerDirection, constant: CGFloat) -> PaginationManager {
         let paginationManager = PaginationManager(scrollView: scrollView, direction: direction, thresholdType: .constant(value: constant))
         return paginationManager
     }
     
     // Static constant threshold initializer for objective-c interop. Without scrollView.
-    static func constantThresholdManager(withDirection direction: PaginationManagerDirection, constant: CGFloat) -> PaginationManager {
+    public static func constantThresholdManager(withDirection direction: PaginationManagerDirection, constant: CGFloat) -> PaginationManager {
         let paginationManager = PaginationManager(direction: direction, thresholdType: .constant(value: constant))
         return paginationManager
     }
     
     // Static percentage threshold initializer for objective-c interop. With scrollView.
-    static func percentageThresholdManager(forScrollView scrollView: UIScrollView, direction: PaginationManagerDirection, percentage: CGFloat) -> PaginationManager {
+    public static func percentageThresholdManager(forScrollView scrollView: UIScrollView, direction: PaginationManagerDirection, percentage: CGFloat) -> PaginationManager {
         let paginationManager = PaginationManager(scrollView: scrollView, direction: direction, thresholdType: .percentage(value: percentage))
         return paginationManager
     }
     
     // Static percentage threshold initializer for objective-c interop. Without scrollView.
-    static func percentageThresholdManager(withDirection direction: PaginationManagerDirection, percentage: CGFloat) -> PaginationManager {
+    public static func percentageThresholdManager(withDirection direction: PaginationManagerDirection, percentage: CGFloat) -> PaginationManager {
         let paginationManager = PaginationManager(direction: direction, thresholdType: .percentage(value: percentage))
         return paginationManager
     }
