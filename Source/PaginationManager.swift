@@ -32,7 +32,7 @@ import Foundation
 import UIKit
 
 // Alias for the pagination manager reset block.
-public typealias PaginationManagerResetBlock = (shouldReset: Bool) -> ()
+public typealias PaginationManagerResetBlock = (_ shouldReset: Bool) -> ()
 
 /// The pagination manager delegate.
 public protocol PaginationManagerDelegate: class {
@@ -71,7 +71,7 @@ public enum PaginationManagerThresholdType {
 
 public let PaginationManagerConstantThresholdScreenDimension: CGFloat = -1
 
-public class PaginationManager: NSObject, UIScrollViewDelegate {
+public class PaginationManager: NSObject {
     
     // Weak reference to the pagination manager delegate
     public weak var delegate: PaginationManagerDelegate?
@@ -146,24 +146,24 @@ public class PaginationManager: NSObject, UIScrollViewDelegate {
 }
 
 
-public extension PaginationManager {
+extension PaginationManager: UIScrollViewDelegate {
     
     // Hook into the scrollview delegate method to compute the percentage scrolled.
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         originalDelegate?.scrollViewDidScroll?(scrollView)
         handleScroll(forScrollView: scrollView)
     }
     
     // Pass unsed delegate methods back to the original delegate.
     
-    override func respondsToSelector(aSelector: Selector) -> Bool {
-        if let delegateResponds = self.originalDelegate?.respondsToSelector(aSelector) where delegateResponds == true {
+    public override func responds(to aSelector: Selector!) -> Bool {
+        if let delegateResponds = self.originalDelegate?.responds(to: aSelector), delegateResponds == true {
             return true
         }
-        return super.respondsToSelector(aSelector)
+        return super.responds(to: aSelector)
     }
     
-    override func forwardingTargetForSelector(aSelector: Selector) -> AnyObject? {
+    public override func forwardingTarget(for aSelector: Selector!) -> Any? {
         return self.originalDelegate
     }
 }
@@ -174,7 +174,7 @@ private extension PaginationManager {
     func informDelegateIfPossible() {
         if state != .exceeded {
             state = .exceeded
-            delegate?.paginationManagerDidExceedThreshold(self, reset: { [weak self] (shouldReset) in
+            delegate?.paginationManagerDidExceedThreshold(manager: self, reset: { [weak self] (shouldReset) in
                 if shouldReset {
                     self?.state = .normal
                 }
@@ -219,7 +219,7 @@ private extension PaginationManager {
     
     func judge(shouldProceedForScrollView scrollView: UIScrollView, lastOffset: CGFloat, state: PaginationManagerState, direction: PaginationManagerDirection) -> Bool {
         let directionalOffset = direction == .horizontal ? scrollView.contentOffset.x : scrollView.contentOffset.y
-        guard state == .normal && scrollView.contentSize != CGSizeZero && directionalOffset >= lastOffset else { return false }
+        guard state == .normal && scrollView.contentSize != CGSize.zero && directionalOffset >= lastOffset else { return false }
         return true
     }
 }
@@ -230,9 +230,9 @@ private extension PaginationManager {
     func normalized(constantForConstantThresholdValue value: CGFloat, direction: PaginationManagerDirection) -> CGFloat {
         var normalizedValue: CGFloat = value >= -1 ? value : 0
         if direction == .vertical {
-            normalizedValue = value == PaginationManagerConstantThresholdScreenDimension ? UIScreen.mainScreen().bounds.size.height : value
+            normalizedValue = value == PaginationManagerConstantThresholdScreenDimension ? UIScreen.main.bounds.size.height : value
         } else {
-            normalizedValue = value == PaginationManagerConstantThresholdScreenDimension ? UIScreen.mainScreen().bounds.size.width : value
+            normalizedValue = value == PaginationManagerConstantThresholdScreenDimension ? UIScreen.main.bounds.size.width : value
         }
         return normalizedValue
     }
